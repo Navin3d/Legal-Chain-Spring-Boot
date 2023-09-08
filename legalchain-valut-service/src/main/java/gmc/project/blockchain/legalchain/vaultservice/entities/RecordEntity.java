@@ -1,4 +1,4 @@
-package gmc.project.blockchain.legalchain.authservice.entities;
+package gmc.project.blockchain.legalchain.vaultservice.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,8 +19,8 @@ public class RecordEntity implements Serializable {
 	@Id
 	private String id;
 	
-	@Field(name = "uploaded_at")
-	private LocalDateTime uploadedAt;
+	@Field(name = "inserted_at")
+	private LocalDateTime insertedAt;
 	
 	@DBRef
 	private UserEntity ownedBy;

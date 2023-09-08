@@ -1,4 +1,4 @@
-package gmc.project.blockchain.legalchain.authservice.entities;
+package gmc.project.blockchain.legalchain.vaultservice.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;

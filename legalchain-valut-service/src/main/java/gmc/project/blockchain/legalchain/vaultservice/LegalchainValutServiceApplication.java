@@ -1,4 +1,4 @@
-package gmc.project.blockchain.legalchain.valutservice;
+package gmc.project.blockchain.legalchain.vaultservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

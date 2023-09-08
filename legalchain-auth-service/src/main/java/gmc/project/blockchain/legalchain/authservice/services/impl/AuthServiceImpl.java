@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,19 +14,28 @@ import org.springframework.stereotype.Service;
 
 import gmc.project.blockchain.legalchain.authservice.dao.UserDao;
 import gmc.project.blockchain.legalchain.authservice.entities.UserEntity;
+import gmc.project.blockchain.legalchain.authservice.models.HyperledgerSignUpModel;
 import gmc.project.blockchain.legalchain.authservice.models.UserModel;
 import gmc.project.blockchain.legalchain.authservice.services.AuthService;
+import gmc.project.blockchain.legalchain.authservice.services.BlockchainServiceFeignClient;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class AuthServiceImpl implements AuthService {
 	
+	@Value("${hyperledger.wallet.admin.username}")
+	private String adminUser;
+	
 	@Autowired
 	private UserDao userDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private BlockchainServiceFeignClient blockchainService;
+	
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
@@ -73,8 +83,25 @@ public class AuthServiceImpl implements AuthService {
 	public void createUser(UserModel userModel) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserEntity detachedUser = modelMapper.map(userModel, UserEntity.class);
-		detachedUser.setEncryptedPassword(bCryptPasswordEncoder.encode(userModel.getEncryptedPassword()));
-		userDao.insert(detachedUser);
+		detachedUser.setEncryptedPassword(bCryptPasswordEncoder.encode(userModel.getPassword()));
+		
+		try {
+			userDao.insert(detachedUser);
+			HyperledgerSignUpModel signUpModel = new HyperledgerSignUpModel(adminUser, userModel.getUsername());
+			if(userModel.getIsLegalUser()) {
+				signUpModel.setOrgMspId("Org1MSP");
+				signUpModel.setAffiliation("org1.department1");
+				blockchainService.createLegalWalletUser(signUpModel);
+			} else {
+				signUpModel.setOrgMspId("Org2MSP");
+				signUpModel.setAffiliation("org2.department2");
+				blockchainService.createCivilWalletUser(signUpModel);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }
