@@ -20,8 +20,8 @@ import swaggerUi from 'swagger-ui-express';
 import expressFile from 'express-fileupload';
 import org1Controller from './controller/org1/index.js';
 import org2Controller from './controller/org2/index.js';
-import { PORT } from "./utils/config/index";
-
+import { PORT, EUREKAPORT, EUREKAAPPNAME } from "./utils/config/index";
+import registerWithEureka from './utils/config/eureka-client.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -40,6 +40,8 @@ comprehensiveApp.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 comprehensiveApp.use("/legal", org1Controller);
 comprehensiveApp.use("/civil", org2Controller);
 
-comprehensiveApp.listen(PORT, () => {
-  logger.info(`The comprehensive smartcontract API is started successfully and running in PORT: ${PORT}`);
+registerWithEureka(EUREKAAPPNAME, EUREKAPORT);
+
+comprehensiveApp.listen(EUREKAPORT, () => {
+  logger.info(`The comprehensive smartcontract API is started successfully and running in PORT: ${EUREKAPORT}`);
 });
