@@ -1,6 +1,7 @@
-const express              = require("express");
-const contractController   = require("./contract.controller");
-const walletController     = require("./wallet.controller");
+import express from "express";
+import contractController from './contract.controller';
+import walletController from './wallet.controller';
+
 const org2Router           = express.Router();
 
 org2Router.get  ("/contract/get/:userId"                ,  contractController.getAssetByUserIdORG2);
@@ -11,4 +12,4 @@ org2Router.post ("/wallet/admin"                        ,  walletController.crea
 org2Router.post ("/wallet/user"                         ,  walletController.createWalletUser);
 
 
-module.exports = org2Router;
+export default org2Router;

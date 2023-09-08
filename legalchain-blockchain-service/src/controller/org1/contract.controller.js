@@ -1,18 +1,15 @@
-const logger                              =    require("slf3d");
+import logger from 'slf3d';
+import contarctService from '../../services/contract.service';
+import { getCCORG1 } from "../../utils/config/ca-client";
+import { uploadFile } from "../../services/ipfs.service";
+import { IPFSURL } from "../../utils/config/ipfs-client";
 
-const contarctService                     =    require("../../services/contract.service");
-const { getCCORG1 }                       =    require("../../utils/config/ca-client");
-import { uploadFile }                     from "../../services/ipfs.service";
-import { IPFSURL }                        from "../../utils/config/ipfs-client";
-
-const ccp                                 =    getCCORG1();
-
+const ccp = getCCORG1();
 
 const saveAssetORG1 = async (req, res) => {
     const { userId, documentId, tittle, description } = req.body;
     const { file } = req.files;
     const fileHash = await uploadFile(file);
-
     const document = {
         tittle,
         description,
@@ -104,7 +101,7 @@ const getAssetByUserIdORG1 = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     saveAssetORG1,
     getAssetByAssetIdORG1,
     getAssetByUserIdORG1,

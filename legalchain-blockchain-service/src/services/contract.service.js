@@ -1,8 +1,10 @@
-const logger = require('slf3d');
-const { Gateway } = require('fabric-network');
+//const logger = require('slf3d');
+//const getWallet = require('../utils/config/wallet');
 
-const getWallet = require('../utils/config/wallet');
-const { CHANNELNAME, CHAINCODENAME } = require('../utils/config');
+import logger from 'slf3d'
+import { Gateway } from 'fabric-network';
+import getWallet from '../utils/config/wallet';
+import { CHANNELNAME, CHAINCODENAME } from '../utils/config';
 
 const gateway = new Gateway();
 
@@ -16,6 +18,8 @@ const saveAsset = async (ccp, userId, documentId, documentString) => {
     let result = false;
     try {
         const wallet = await getWallet();
+
+        console.log(userId, documentId, documentString);
 
         await gateway.connect(ccp, {
             wallet,
@@ -84,17 +88,18 @@ const getAssetByAssetId = async (ccp, userId, assetId) => {
 
         logger.log(`Evaluate Transaction: ReadAsset, function returns ${assetId} attributes`);
         asset                  = await contract.evaluateTransaction('ReadAsset', assetId);
+        asset                  = JSON.parse(asset);
         const file             = JSON.parse(asset["DocumentData"]);
         asset["DocumentData"]  = file
         logger.log(`Successfuly fetched the assets`);
     } catch (e) {
-        logger.log(e.message);
+        console.log(e);
         throw e;
     } finally {
         gateway.disconnect();
     }
 
-    return JSON.parse(prettyJSONString(asset.toString()));
+    return asset;
 
 }
 
@@ -111,7 +116,7 @@ const getAssetByUserId = async (ccp, userId) => {
     return filteredAssets;
 }
 
-module.exports = {
+export default {
     getAssetByAssetId,
     getAssetByUserId,
     saveAsset,

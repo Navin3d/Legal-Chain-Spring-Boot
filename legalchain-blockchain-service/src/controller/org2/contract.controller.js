@@ -1,10 +1,8 @@
-const logger                              = require("slf3d");
+import logger from 'slf3d';
+import contarctService from '../../services/contract.service';
+import { getCCORG2 } from "../../utils/config/ca-client";
 
-const contarctService                     = require("../../services/contract.service");
-const { getCCORG2 }                       = require("../../utils/config/ca-client");
-
-const ccp                                 = getCCORG2();
-
+const ccp = getCCORG2();
 
 const saveAssetORG2 = async (req, res) => {
     const { userId, documentId, documentString } = req.body;
@@ -92,7 +90,7 @@ const getAssetByUserIdORG2 = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     saveAssetORG2,
     getAssetByAssetIdORG2,
     getAssetByUserIdORG2,

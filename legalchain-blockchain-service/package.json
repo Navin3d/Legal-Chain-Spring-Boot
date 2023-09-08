@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "This is an application to intract with Hyperledger chin code.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node ./src/index.js",
-    "test": "nodemon ./src/index.js"
+    "start": "NODE_OPTIONS='--experimental-specifier-resolution=node' node ./src/index.js",
+    "test": "NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon ./src/index.js"
   },
   "keywords": [
     "Hyperledger",

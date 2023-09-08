@@ -36,7 +36,7 @@ const executeCommandsSequentially = async (commands) => {
         }
 
         console.log('All commands executed successfully.');
-        process.exit(0);
+        // process.exit(0);
     } catch (error) {
         console.error('Error executing commands:', error);
     }

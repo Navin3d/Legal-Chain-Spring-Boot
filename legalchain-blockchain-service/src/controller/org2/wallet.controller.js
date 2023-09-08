@@ -1,10 +1,8 @@
-const logger                              = require("slf3d");
+import logger from 'slf3d';
+import walletService from '../../services/wallet.service';
+import { getCAClientOrg2 } from "../../utils/config/ca-client";
 
-const walletService                       = require("../../services/wallet.service");
-const { getCAClientOrg2 }                 = require("../../utils/config/ca-client");
-
-const caClient                            = getCAClientOrg2();
-
+const caClient = getCAClientOrg2();
 
 const createWalletAdmin = async (req, res) => {
     const { orgMspId, walletAdminUserId, walletAdminUserPassword } = req.body;
@@ -62,7 +60,7 @@ const createWalletUser = async (req, res) => {
 
 }
 
-module.exports = {
+export default {
     createWalletAdmin,
     createWalletUser
 }

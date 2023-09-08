@@ -4,7 +4,8 @@ const commands = [
     "rm stop.log",
     './network.sh down >> stop.log && echo "Network is down..."',
     "node clean.js >> stop.log && echo OK",
-    "rm -r ./application/src/utils/wallet",
+    "rm -r ../legalchain-blockchain-service/src/utils/wallet && echo OK",
+    "docker volume prune -f >> stop.log && echo OK",
 ];
 
 const executeCommand = (command) => {

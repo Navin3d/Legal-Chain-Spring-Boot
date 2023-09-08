@@ -1,6 +1,6 @@
 const { Gateway } = require('fabric-network');
-
-const getWallet = require("./utils/config/wallet"); 
+import getWallet from './utils/config/wallet';
+//const getWallet = require("./utils/config/wallet"); 
 const { createWalletAdmin, createWalletUser } = require("./services/wallet.service");
 const { getCCORG1, getCAClientOrg1 } = require("./utils/config/ca-client");
 const { CHAINCODENAME, CHANNELNAME, MSPORG1, AFFIILIATION } = require("./utils/config");
