@@ -71,7 +71,7 @@ const getAllAsset = async (ccp, userId) => {
 const getAssetByAssetId = async (ccp, userId, assetId) => {
     let asset = null;
     try {
-        const wallet = await getWallet();
+        const wallet          = await getWallet();
 
         await gateway.connect(ccp, {
             wallet,
@@ -79,11 +79,13 @@ const getAssetByAssetId = async (ccp, userId, assetId) => {
             discovery: { enabled: true, asLocalhost: true }
         });
 
-        const network = await gateway.getNetwork(CHANNELNAME);
-        const contract = network.getContract(CHAINCODENAME);
+        const network          = await gateway.getNetwork(CHANNELNAME);
+        const contract         = network.getContract(CHAINCODENAME);
 
         logger.log(`Evaluate Transaction: ReadAsset, function returns ${assetId} attributes`);
-        asset = await contract.evaluateTransaction('ReadAsset', assetId);
+        asset                  = await contract.evaluateTransaction('ReadAsset', assetId);
+        const file             = JSON.parse(asset["DocumentData"]);
+        asset["DocumentData"]  = file
         logger.log(`Successfuly fetched the assets`);
     } catch (e) {
         logger.log(e.message);
@@ -99,7 +101,13 @@ const getAssetByAssetId = async (ccp, userId, assetId) => {
 const getAssetByUserId = async (ccp, userId) => {
     const assetsString = await getAllAsset(ccp, userId);
     const assets = JSON.parse(assetsString);
-    let filteredAssets = assets.filter(assset => assset["UserId"] == userId);
+    let filteredAssets = assets.map(assset => {
+        if(assset["UserId"] == userId) {
+            const file             = JSON.parse(assset["DocumentData"]);
+            assset["DocumentData"] = file
+            return assset;
+        }
+    });
     return filteredAssets;
 }
 

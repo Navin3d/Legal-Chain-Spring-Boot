@@ -1,13 +1,25 @@
-const logger                              = require("slf3d");
+const logger                              =    require("slf3d");
 
-const contarctService                     = require("../../services/contract.service");
-const { getCCORG1 }                       = require("../../utils/config/ca-client");
+const contarctService                     =    require("../../services/contract.service");
+const { getCCORG1 }                       =    require("../../utils/config/ca-client");
+import { uploadFile }                     from "../../services/ipfs.service";
+import { IPFSURL }                        from "../../utils/config/ipfs-client";
 
-const ccp                                 = getCCORG1();
+const ccp                                 =    getCCORG1();
 
 
 const saveAssetORG1 = async (req, res) => {
-    const { userId, documentId, documentString } = req.body;
+    const { userId, documentId, tittle, description } = req.body;
+    const { file } = req.files;
+    const fileHash = await uploadFile(file);
+
+    const document = {
+        tittle,
+        description,
+        hash: IPFSURL + fileHash,
+        timeStamp: new Date(),
+    }
+    const documentString = JSON.stringify(document);
 
     if(!(userId && documentId))
         return res.status(400).json({

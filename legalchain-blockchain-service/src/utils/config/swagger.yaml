@@ -3,7 +3,7 @@ info:
   title: Comprehensive Smart Contract
   version: 1.0.0
 paths:
-  /org1/contract/get/{userId}:
+  /legal/contract/get/{userId}:
     get:
       summary: Get asset in contract by userId.
       parameters:
@@ -23,7 +23,7 @@ paths:
                   message:
                     type: string
 
-  /org1/contract/get/{userId}/{documentId}:
+  /legal/contract/get/{userId}/{documentId}:
     get:
       summary: Get asset in contract by userId.
       parameters:
@@ -49,7 +49,7 @@ paths:
                   message:
                     type: string
 
-  /org1/contract:
+  /legal/contract:
     post:
       summary: create or update asset in chain.
       requestBody:
@@ -76,7 +76,7 @@ paths:
                   message:
                     type: string
 
-  /org1/wallet/admin:
+  /legal/wallet/admin:
     post:
       summary: Create a wallet admin.
       requestBody:
@@ -103,7 +103,7 @@ paths:
                   message:
                     type: string
               
-  /org1/wallet/user:
+  /legal/wallet/user:
     post:
       summary: Create a wallet user.
       requestBody:
@@ -132,7 +132,7 @@ paths:
                   message:
                     type: string
 
-  /org2/contract/get/{userId}:
+  /civil/contract/get/{userId}:
     get:
       summary: Get asset in contract by userId.
       parameters:
@@ -152,7 +152,7 @@ paths:
                   message:
                     type: string
 
-  /org2/contract/get/{userId}/{documentId}:
+  /civil/contract/get/{userId}/{documentId}:
     get:
       summary: Get asset in contract by userId.
       parameters:
@@ -178,7 +178,7 @@ paths:
                   message:
                     type: string
 
-  /org2/contract:
+  /civil/contract:
     post:
       summary: create or update asset in chain.
       requestBody:
@@ -205,7 +205,7 @@ paths:
                   message:
                     type: string
 
-  /org2/wallet/admin:
+  /civil/wallet/admin:
     post:
       summary: Create a wallet admin.
       requestBody:
@@ -232,7 +232,7 @@ paths:
                   message:
                     type: string
               
-  /org2/wallet/user:
+  /civil/wallet/user:
     post:
       summary: Create a wallet user.
       requestBody:
