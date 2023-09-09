@@ -1,5 +1,8 @@
 package gmc.project.blockchain.legalchain.vaultservice.services;
 
-public interface UserService {
+import gmc.project.blockchain.legalchain.vaultservice.entities.UserEntity;
 
+public interface UserService {
+	public UserEntity findOne(String uniqeId);
+	public UserEntity save(UserEntity userEntity);
 }
