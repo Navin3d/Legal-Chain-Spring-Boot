@@ -15,7 +15,7 @@ public class DateUtill {
 	}
 	
 	public static LocalDateTime parseDT(String dateString) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		LocalDateTime date = LocalDateTime.parse(dateString, formatter);
 		return date;
 	}

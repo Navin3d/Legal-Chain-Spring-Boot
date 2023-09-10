@@ -100,7 +100,6 @@ const getAssetByAssetId = async (ccp, userId, assetId) => {
     }
 
     return asset;
-
 }
 
 const getAssetByUserId = async (ccp, userId) => {
@@ -116,8 +115,41 @@ const getAssetByUserId = async (ccp, userId) => {
     return filteredAssets;
 }
 
+const getAssets = async (ccp, userId, assetIds) => {
+    let assets = [];
+    try {
+        const wallet          = await getWallet();
+
+        await gateway.connect(ccp, {
+            wallet,
+            identity: userId,
+            discovery: { enabled: true, asLocalhost: true }
+        });
+
+        const network          = await gateway.getNetwork(CHANNELNAME);
+        const contract         = network.getContract(CHAINCODENAME);
+
+        for(const assetId of assetIds) {
+            logger.log(`Evaluate Transaction: ReadAsset, function returns ${assetId} attributes`);
+            let asset              = await contract.evaluateTransaction('ReadAsset', assetId);
+            asset                  = JSON.parse(asset);
+            const file             = JSON.parse(asset["DocumentData"]);
+            asset["DocumentData"]  = file;
+            assets.push(asset);
+        }
+        logger.log(`Successfuly fetched the assets`);
+    } catch (e) {
+        console.log(e);
+        throw e;
+    } finally {
+        gateway.disconnect();
+    }
+    return assets;
+}
+
 export default {
     getAssetByAssetId,
     getAssetByUserId,
+    getAssets,
     saveAsset,
 };

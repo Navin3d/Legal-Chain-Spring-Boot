@@ -90,8 +90,37 @@ const getAssetByUserIdORG2 = async (req, res) => {
     }
 }
 
+const getAssetByAssetIdsORG2 = async (req, res) => {
+    const { userId, documentIds } = req.params;
+
+    if(!(userId && documentIds))
+        return res.status(400).json({
+            message : "Failed to fetch asset...",
+            status  : 0,
+            error   : "userId and documentId is mandatory in request-body...",
+        });
+
+    try {
+        const result = await contarctService.getAssets(ccp, userId, documentIds.split(","));
+        return res.status(200).json({
+            message : "Fetched asset successfully...",
+            status  : 1,
+            data    : result,
+        });
+    } catch(err) {
+        logger.error(err.message);
+
+        return res.status(500).json({
+            message : "Failed to fetch asset...",
+            status  : 0,
+            error   : err.message,
+        });
+    }
+}
+
 export default {
     saveAssetORG2,
     getAssetByAssetIdORG2,
     getAssetByUserIdORG2,
+    getAssetByAssetIdsORG2,
 }
