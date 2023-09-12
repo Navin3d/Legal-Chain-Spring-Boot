@@ -1,14 +1,22 @@
 //const logger = require('slf3d');
 //const getWallet = require('../utils/config/wallet');
 
-import logger from 'slf3d'
+import logger from 'slf3d';
+import request from "superagent";
 import { Gateway } from 'fabric-network';
 import getWallet from '../utils/config/wallet';
 import { CHANNELNAME, CHAINCODENAME } from '../utils/config';
 
 const date = new Date();
 const gateway = new Gateway();
+const apiClient = request.agent();
 
+const vaultService = {
+    pinFile: (fileModel) => {
+      return apiClient.post('http://localhost:8080/record/pin').send(fileModel);
+    },
+};
+  
 
 const prettyJSONString = (inputString) => {
     return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -31,29 +39,17 @@ const saveAsset = async (ccp, userId, documentId, documentString) => {
         const network = await gateway.getNetwork(CHANNELNAME);
         const contract = network.getContract(CHAINCODENAME);
 
-        const body = {
+        logger.log(`Submit Transaction: CreateAssert ${documentId}, change the appraisedValue to 350`);
+        result = await contract.submitTransaction('CreateAssert', userId, documentId, documentString);
+        logger.log('Result: committed');
+
+        const doc = {
             id: documentId,
             insertedAt: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${(date.getDate()).toString().padStart(2, "0")}` + "T00:00:00",
             ownedBy: userId,
         };
 
-        await fetch("http://localhost:8080/record/pin", {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-              "Content-Type": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body, // body data type must match "Content-Type" header
-        });
-
-        logger.log(`Submit Transaction: CreateAssert ${documentId}, change the appraisedValue to 350`);
-        result = await contract.submitTransaction('CreateAssert', userId, documentId, documentString);
-        logger.log('Result: committed');
+        await vaultService.pinFile(doc);
     } catch (e) {
         logger.error(e.message);
         throw e;

@@ -103,7 +103,7 @@ const getAssetByUserIdORG1 = async (req, res) => {
 }
 
 const getAssetByAssetIdsORG1 = async (req, res) => {
-    const { userId, documentIds } = req.params;
+    const { userId, documentIds } = req.body;
 
     if(!(userId && documentIds))
         return res.status(400).json({
@@ -113,7 +113,7 @@ const getAssetByAssetIdsORG1 = async (req, res) => {
         });
 
     try {
-        const result = await contarctService.getAssets(ccp, userId, documentIds.split(","));
+        const result = await contarctService.getAssets(ccp, userId, documentIds);
         return res.status(200).json({
             message : "Fetched asset successfully...",
             status  : 1,

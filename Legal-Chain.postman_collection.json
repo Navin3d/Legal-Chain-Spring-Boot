@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "a266c1cb-e80b-40c0-81db-f98299879e26",
+		"name": "Legal-Chain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17195439"
+	},
+	"item": [
+		{
+			"name": "Blockchain Service",
+			"item": [
+				{
+					"name": "Store Asset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userId",
+									"value": "navin3d",
+									"type": "text"
+								},
+								{
+									"key": "documentId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "tittle",
+									"value": "GMC",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "The future is here...",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/navindurai/Downloads/AbithaBalamurugan. Resume.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:62002/legal/contract",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62002",
+							"path": [
+								"legal",
+								"contract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Asset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/legal/contract/get/navin3d/1bfe0f90-5777-4862-b177-12111e8e17c9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"legal",
+								"contract",
+								"get",
+								"navin3d",
+								"1bfe0f90-5777-4862-b177-12111e8e17c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Wallet User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orgMspId\": \"Org1MSP\",\n    \"walletAdminUserId\": \"admin\",\n    \"userId\": \"navin3d\",\n    \"affiliation\": \"org1.department1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:46048/legal/wallet/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "46048",
+							"path": [
+								"legal",
+								"wallet",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Wallet Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orgMspId\": \"Org1MSP\", \n    \"walletAdminUserId\": \"admin\", \n    \"walletAdminUserPassword\": \"adminpw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:14669/legal/wallet/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "14669",
+							"path": [
+								"legal",
+								"wallet",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User Asset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:49236/legal/contract/get/logamis",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "49236",
+							"path": [
+								"legal",
+								"contract",
+								"get",
+								"logamis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/legal/contract/get/navin3d/many/3,1bfe0f90-5777-4862-b177-12111e8e17c9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"legal",
+								"contract",
+								"get",
+								"navin3d",
+								"many",
+								"3,1bfe0f90-5777-4862-b177-12111e8e17c9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth Service",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"navin3d\",\n    \"password\": \"navin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.29.43:49870/auth/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"29",
+								"43"
+							],
+							"port": "49870",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Loga\",\n  \"lastName\": \"Subramani\",\n  \"aadharNumber\": \"1111222233334445\",\n  \"username\": \"logamis\",\n  \"mobileNumber\": \"9442807218\",\n  \"email\": \"smlogasubramani@gmail.com\",\n  \"password\": \"loga\",\n  \"isLegalUser\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vault Service",
+			"item": [
+				{
+					"name": "Pin Record",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"2\",\n    \"insertedAt\": \"2023-09-09T00:00:00\",\n    \"ownedBy\": \"navin3d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.29.43:49779/record/pin",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"29",
+								"43"
+							],
+							"port": "49779",
+							"path": [
+								"record",
+								"pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share Records",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recordIds\": [\n        \"8291e69a-0aba-4e66-b680-d226a2aded93\"\n    ],\n    \"userIds\": [\n        \"logamis\"\n    ],\n    \"shareUntil\": \"2023-10-10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/share",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"share"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get UserRecords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/docs/navin3d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"docs",
+								"navin3d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

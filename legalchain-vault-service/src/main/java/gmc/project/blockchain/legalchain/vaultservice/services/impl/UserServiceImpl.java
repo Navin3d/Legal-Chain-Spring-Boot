@@ -9,6 +9,7 @@ import gmc.project.blockchain.legalchain.vaultservice.entities.UserEntity;
 import gmc.project.blockchain.legalchain.vaultservice.models.BlockchainDocModel;
 import gmc.project.blockchain.legalchain.vaultservice.models.BlockchainResponse;
 import gmc.project.blockchain.legalchain.vaultservice.models.DocumentModel;
+import gmc.project.blockchain.legalchain.vaultservice.models.GetDocumentsModel;
 import gmc.project.blockchain.legalchain.vaultservice.models.UserRecordsModel;
 import gmc.project.blockchain.legalchain.vaultservice.services.BlockchainServiceFeignClient;
 import gmc.project.blockchain.legalchain.vaultservice.services.UserService;
@@ -67,15 +68,15 @@ public class UserServiceImpl implements UserService {
 	public UserRecordsModel getUserRecords(String uname) {
 		UserRecordsModel returnValue = new UserRecordsModel();
 		UserEntity foundUser = findOne(uname);
-		String recordOwned = "";
-		String recordShared = "";
+		GetDocumentsModel owned = new GetDocumentsModel(uname);
+		GetDocumentsModel shared = new GetDocumentsModel(uname);
 		for(RecordEntity record : foundUser.getRecordsOwned())
-			recordOwned += record.getId() + ",";
+			owned.getDocumentIds().add(record.getId());
 		for(RecordEntity record : foundUser.getRecordsShared())
-			recordShared += record.getId() + ",";
-		log.error("recordOwned {} - {}.", recordOwned, recordShared);
-		BlockchainResponse ownedResponse = blockchainService.getDocuments(uname, recordOwned);
-		BlockchainResponse sharedResponse = blockchainService.getDocuments(uname, recordShared);
+			shared.getDocumentIds().add(record.getId());
+		log.error("recordOwned {} - {}.", owned, shared);
+		BlockchainResponse ownedResponse = blockchainService.getDocuments(owned);
+		BlockchainResponse sharedResponse = blockchainService.getDocuments(shared);
 		for(BlockchainDocModel recModel : ownedResponse.getData()) {
 			 DocumentModel doc = recModel.getDocumentData();
 			 doc.setId(recModel.getDocumentId());

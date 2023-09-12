@@ -6,7 +6,7 @@ const org2Router           = express.Router();
 
 org2Router.get  ("/contract/get/:userId"                     ,  contractController.getAssetByUserIdORG2);
 org2Router.get  ("/contract/get/:userId/:documentId"         ,  contractController.getAssetByAssetIdORG2);
-org2Router.get  ("/contract/get/:userId/many/:documentIds"   ,  contractController.getAssetByAssetIdsORG2);
+org2Router.post ("/contract/get/many"                        ,  contractController.getAssetByAssetIdsORG2);
 org2Router.post ("/contract"                                 ,  contractController.saveAssetORG2);
 
 org2Router.post ("/wallet/admin"                             ,  walletController.createWalletAdmin);
