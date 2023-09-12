@@ -4,7 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gmc.project.blockchain.legalchain.vaultservice.dao.UserDao;
+import gmc.project.blockchain.legalchain.vaultservice.entities.RecordEntity;
 import gmc.project.blockchain.legalchain.vaultservice.entities.UserEntity;
+import gmc.project.blockchain.legalchain.vaultservice.models.BlockchainDocModel;
+import gmc.project.blockchain.legalchain.vaultservice.models.BlockchainResponse;
+import gmc.project.blockchain.legalchain.vaultservice.models.DocumentModel;
+import gmc.project.blockchain.legalchain.vaultservice.models.UserRecordsModel;
+import gmc.project.blockchain.legalchain.vaultservice.services.BlockchainServiceFeignClient;
 import gmc.project.blockchain.legalchain.vaultservice.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +20,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private BlockchainServiceFeignClient blockchainService;
 
 	@Override
 	public UserEntity findOne(String uniqueId) {
@@ -52,6 +61,32 @@ public class UserServiceImpl implements UserService {
 	public UserEntity save(UserEntity userEntity) {
 		UserEntity saveduser = userDao.save(userEntity);
 		return saveduser;
+	}
+
+	@Override
+	public UserRecordsModel getUserRecords(String uname) {
+		UserRecordsModel returnValue = new UserRecordsModel();
+		UserEntity foundUser = findOne(uname);
+		String recordOwned = "";
+		String recordShared = "";
+		for(RecordEntity record : foundUser.getRecordsOwned())
+			recordOwned += record.getId() + ",";
+		for(RecordEntity record : foundUser.getRecordsShared())
+			recordShared += record.getId() + ",";
+		log.error("recordOwned {} - {}.", recordOwned, recordShared);
+		BlockchainResponse ownedResponse = blockchainService.getDocuments(uname, recordOwned);
+		BlockchainResponse sharedResponse = blockchainService.getDocuments(uname, recordShared);
+		for(BlockchainDocModel recModel : ownedResponse.getData()) {
+			 DocumentModel doc = recModel.getDocumentData();
+			 doc.setId(recModel.getDocumentId());
+			 returnValue.getOwnedRecords().add(doc);
+		}
+		for(BlockchainDocModel recModel : sharedResponse.getData()) {
+			 DocumentModel doc = recModel.getDocumentData();
+			 doc.setId(recModel.getDocumentId());
+			 returnValue.getSharedRecords().add(doc);
+		}
+		return returnValue;
 	}
 
 }

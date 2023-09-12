@@ -1,4 +1,5 @@
 import logger from 'slf3d';
+import { v4 } from "uuid";
 import contarctService from '../../services/contract.service';
 import { getCCORG1 } from "../../utils/config/ca-client";
 import { uploadFile } from "../../services/ipfs.service";
@@ -7,7 +8,7 @@ import { IPFSURL } from "../../utils/config/ipfs-client";
 const ccp = getCCORG1();
 
 const saveAssetORG1 = async (req, res) => {
-    const { userId, documentId, tittle, description } = req.body;
+    const { userId, documentId = v4(), tittle, description } = req.body;
     const { file } = req.files;
     const fileHash = await uploadFile(file);
     const document = {

@@ -27,6 +27,7 @@
     "nodemon": "^2.0.22",
     "slf3d": "^0.0.3",
     "swagger-ui-express": "^5.0.0",
+    "uuid": "^9.0.1",
     "yamljs": "^0.3.0"
   }
 }
