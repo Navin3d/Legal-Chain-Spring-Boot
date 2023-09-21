@@ -28,5 +28,9 @@ public class UserModel implements Serializable {
 	private String encryptedPassword;
 
 	private Boolean isLegalUser;
+	
+	private String otp;
+	
+	private Boolean isOTPUsed;
 
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 @Component
 @ConfigurationProperties(prefix = "auth")
 public class AuthConfig {
+	private String auth2FUrl;
 	private String authUrl;
 	private String issuer;
 	private String jwtSecret;

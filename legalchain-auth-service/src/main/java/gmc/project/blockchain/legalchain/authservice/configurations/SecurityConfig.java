@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
 import gmc.project.blockchain.legalchain.authservice.filter.AuthFilter;
+import gmc.project.blockchain.legalchain.authservice.filter.AuthFilter2F;
 import gmc.project.blockchain.legalchain.authservice.services.AuthService;
 
 @Component
@@ -36,6 +37,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(authReq -> authReq.requestMatchers("/**").permitAll().anyRequest().authenticated())
 			.headers(headers -> headers.frameOptions(opt -> opt.disable()).disable());
 		http.addFilter(getAuthManager());
+		http.addFilter(get2FAuthManager());
 		http.authenticationManager(authManager);
 		return http.build();
 	}
@@ -43,6 +45,12 @@ public class SecurityConfig {
 	private AuthFilter getAuthManager() {
 		AuthFilter authFilter = new AuthFilter(authConfig, authService, authManager);
 		authFilter.setFilterProcessesUrl(authConfig.getAuthUrl());
+		return authFilter;
+	}
+	
+	private AuthFilter2F get2FAuthManager() {
+		AuthFilter2F authFilter = new AuthFilter2F(authService, authManager);
+		authFilter.setFilterProcessesUrl(authConfig.getAuth2FUrl());
 		return authFilter;
 	}
 

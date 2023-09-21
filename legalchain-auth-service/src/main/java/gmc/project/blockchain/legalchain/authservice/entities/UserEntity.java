@@ -49,6 +49,12 @@ public class UserEntity implements Serializable {
 	@Field(name = "is_legal_user")
 	private Boolean isLegalUser;
 	
+	@Field(name = "otp")
+	private String otp;
+	
+	@Field(name = "is_otp_used")
+	private Boolean isOTPUsed;
+	
 	@DBRef
 	private Set<RecordEntity> recordsOwned = new HashSet<>();
 	

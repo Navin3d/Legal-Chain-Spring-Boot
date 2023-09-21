@@ -25,7 +25,8 @@
 								{
 									"key": "documentId",
 									"value": "3",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "tittle",
@@ -97,12 +98,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:46048/legal/wallet/user",
+							"raw": "http://localhost:8080/legal/wallet/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "46048",
+							"port": "8080",
 							"path": [
 								"legal",
 								"wallet",
@@ -127,12 +128,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:14669/legal/wallet/admin",
+							"raw": "http://localhost:8080/legal/wallet/admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "14669",
+							"port": "8080",
 							"path": [
 								"legal",
 								"wallet",
@@ -208,15 +209,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://192.168.29.43:49870/auth/login",
+							"raw": "http://localhost:8080/auth/login",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"29",
-								"43"
+								"localhost"
 							],
-							"port": "49870",
+							"port": "8080",
 							"path": [
 								"auth",
 								"login"
@@ -253,12 +251,122 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "2F Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"navin3d\",\n    \"password\": \"navin\",\n    \"otp\": \"135649\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:50462/auth/login/2f",
+							"host": [
+								"localhost"
+							],
+							"port": "50462",
+							"path": [
+								"auth",
+								"login",
+								"2f"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Vault Service",
 			"item": [
+				{
+					"name": "Parivahan",
+					"item": [
+						{
+							"name": "Genarate OTP",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:50627/transfer/LICENSE/smnavin65@gmail.com",
+									"host": [
+										"localhost"
+									],
+									"port": "50627",
+									"path": [
+										"transfer",
+										"LICENSE",
+										"smnavin65@gmail.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Request Doc",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"LICENSE\",\n    \"ref\": \"TN92ND0987\",\n    \"dob\": \"2002-09-09\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:51064/transfer/req",
+									"host": [
+										"localhost"
+									],
+									"port": "51064",
+									"path": [
+										"transfer",
+										"req"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cache License",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"smnavin65@gmail.com\",\n    \"otp\": \"398709\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/transfer/license",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"transfer",
+										"license"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "Pin Record",
 					"request": {
@@ -274,15 +382,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://192.168.29.43:49779/record/pin",
+							"raw": "http://localhost:8080/record/pin",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"29",
-								"43"
+								"localhost"
 							],
-							"port": "49779",
+							"port": "8080",
 							"path": [
 								"record",
 								"pin"
@@ -298,7 +403,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"recordIds\": [\n        \"8291e69a-0aba-4e66-b680-d226a2aded93\"\n    ],\n    \"userIds\": [\n        \"logamis\"\n    ],\n    \"shareUntil\": \"2023-10-10\"\n}",
+							"raw": "{\n    \"recordIds\": [\n        \"5d19cb9d-a4c3-46c9-97c5-39e4548f2ee4\"\n    ],\n    \"userIds\": [\n        \"logamis\"\n    ],\n    \"shareUntil\": \"2023-10-10\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -335,6 +440,202 @@
 								"user",
 								"docs",
 								"navin3d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parivahan-Seva",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Initiate4f",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"LICENSE\",\n    \"ref\": \"TN92ND0987\",\n    \"dob\": \"2002-09-09\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/parivahan/initiate4f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"parivahan",
+										"initiate4f"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Put Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"assetId\": \"asset-1\",\r\n    \"userId\": \"smnavin65@gmail.com\",\r\n    \"assetData\": \"testing putdata\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/contract/asset",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"contract",
+								"asset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Asset By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/contract/asset/asset-1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"contract",
+								"asset",
+								"asset-1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Asset By User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/contract/asset/user/d6d62290-e6a9-4c3b-8ba8-3eebb55e4997",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"contract",
+								"asset",
+								"user",
+								"d6d62290-e6a9-4c3b-8ba8-3eebb55e4997"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Driving License",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Navin Durai S M",
+									"type": "text"
+								},
+								{
+									"key": "dateOfBirth",
+									"value": "2002-09-09",
+									"type": "text"
+								},
+								{
+									"key": "licenseNumber",
+									"value": "TN92ND0987",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/navindurai/Downloads/loga-github.jpeg"
+								},
+								{
+									"key": "email",
+									"value": "smnavin65@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "mobileNumber",
+									"value": "9442807217",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/parivahan/license",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"parivahan",
+								"license"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get License",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"smnavin65@gmail.com\",\n    \"otp\": \"906014\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/parivahan/license/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"parivahan",
+								"license",
+								"get"
 							]
 						}
 					},
